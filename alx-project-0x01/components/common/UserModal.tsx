@@ -1,8 +1,8 @@
-import { UserData, UserModalProps } from "@/interfaces";
 import React, { useState } from "react";
+import { UserProps, UserModalProps } from "@/interfaces";
 
 const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
-  const [user, setUser] = useState<UserData>({
+  const [user, setUser] = useState<UserProps>({
     name: "",
     username: "",
     email: "",
@@ -11,32 +11,36 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
       suite: "",
       city: "",
       zipcode: "",
-      geo: { lat: "", lng: "" },
+      geo: {
+        lat: "",
+        lng: ""
+      }
     },
     phone: "",
     website: "",
     company: {
       name: "",
       catchPhrase: "",
-      bs: "",
-    },
+      bs: ""
+    }
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({
       ...prevUser,
-      [name]: value,
+      [name]: value
     }));
   };
 
-  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({
       ...prevUser,
-      address: { ...prevUser.address, [name]: value },
+      address: {
+        ...prevUser.address,
+        [field]: value
+      }
     }));
   };
 
@@ -52,9 +56,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Add New User</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
-              Name
-            </label>
+            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>
             <input
               type="text"
               id="name"
@@ -62,13 +64,11 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
               value={user.name}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter name"
+              placeholder="Enter user name"
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
-              Username
-            </label>
+            <label htmlFor="username" className="block text-gray-700 font-medium mb-2">Username</label>
             <input
               type="text"
               id="username"
@@ -80,9 +80,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-              Email
-            </label>
+            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
             <input
               type="email"
               id="email"
@@ -94,17 +92,14 @@ const UserModal: React.FC<UserModalProps> = ({ onClose, onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="street" className="block text-gray-700 font-medium mb-2">
-              Street
-            </label>
+            <label htmlFor="street" className="block text-gray-700 font-medium mb-2">Street</label>
             <input
               type="text"
               id="street"
               name="street"
               value={user.address.street}
-              onChange={handleAddressChange}
+              onChange={(e) => handleAddressChange(e, "street")}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter street"
             />
           </div>
           <div className="flex justify-between items-center">
